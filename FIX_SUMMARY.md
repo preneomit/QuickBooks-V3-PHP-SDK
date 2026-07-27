@@ -58,10 +58,30 @@ public function __construct($idsLogger = null)
     if ($idsLogger) {
         self::$IDSLogger = $idsLogger;
     } else {
-        self::$IDSLogger = new TraceLogger();  // ← FIX: Create default logger
+        self::$IDSLogger = new Logger();  // ← FIX: Create default Logger with CustomLogger property
     }
 }
 ```
+
+**Updated Imports:** Removed unused `TraceLogger` import and kept only `Logger`:
+
+```php
+use QuickBooksOnline\API\Diagnostics\Logger;
+use QuickBooksOnline\API\Diagnostics\TraceLevel;
+```
+
+### Why Logger Instead of TraceLogger
+
+The code accesses `self::$IDSLogger->CustomLogger`, but `TraceLogger` extends `LoggerBase` and doesn't have a `CustomLogger` property. The `Logger` class has both `RequestLog` and `CustomLogger` properties:
+
+```php
+class Logger {
+    public $RequestLog;   // LoggerBase
+    public $CustomLogger; // LoggerBase
+}
+```
+
+Using `Logger` ensures both properties are available as expected by the error handling code.
 
 ### Why This Approach Was Chosen
 

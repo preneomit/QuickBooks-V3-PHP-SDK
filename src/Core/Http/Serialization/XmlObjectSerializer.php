@@ -4,7 +4,6 @@ namespace QuickBooksOnline\API\Core\Http\Serialization;
 
 use QuickBooksOnline\API\Core\CoreConstants;
 use QuickBooksOnline\API\Data\IPPIntuitEntity;
-use QuickBooksOnline\API\Diagnostics\TraceLogger;
 use QuickBooksOnline\API\XSD2PHP\src\com\mikebevz\xsd2php\Php2Xml;
 use QuickBooksOnline\API\XSD2PHP\src\com\mikebevz\xsd2php\Bind;
 use QuickBooksOnline\API\Diagnostics\Logger;
@@ -219,7 +218,7 @@ class XmlObjectSerializer extends IEntitySerializer
         if ($idsLogger) {
             self::$IDSLogger = $idsLogger;
         } else {
-            self::$IDSLogger = new TraceLogger();
+            self::$IDSLogger = new Logger();
         }
     }
 
